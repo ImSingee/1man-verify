@@ -1,33 +1,21 @@
 package main
 
 import (
-	"github.com/ImSingee/1man-verify/config"
-	"github.com/ImSingee/1man-verify/server"
-	"github.com/gin-gonic/gin"
+	"fmt"
+	"github.com/spf13/cobra"
+	"os"
 )
 
-func setupServer() (*gin.Engine, error) {
-
-	if !config.Debug() {
-		gin.SetMode(gin.ReleaseMode)
-	}
-
-	r := gin.Default()
-
-	server.SetupRouter(r)
-
-	return r, nil
+var app = &cobra.Command{
+	Use:           "1man-verify",
+	SilenceErrors: true,
+	SilenceUsage:  true,
 }
 
 func main() {
-	engine, err := setupServer()
+	err := app.Execute()
 	if err != nil {
-		panic("Failed to setup server")
-	}
-
-	err = engine.Run("0.0.0.0:80")
-	// TODO 优雅关闭
-	if err != nil {
-		panic("Failed to run server")
+		fmt.Println("ERROR:", err)
+		os.Exit(1)
 	}
 }

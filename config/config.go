@@ -8,11 +8,16 @@ import (
 var _config *config
 
 type config struct {
-	Debug bool `yaml:"debug"`
+	Debug bool   `yaml:"debug"`
+	MySQL string `yaml:"mysql"`
 }
 
 func Debug() bool {
 	return _config.Debug
+}
+
+func MySQL() string {
+	return _config.MySQL
 }
 
 func init() {
